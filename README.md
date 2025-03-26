@@ -46,5 +46,19 @@ This project is being built and iterated on as part of my learning process.
 
 ## 📄 Contract Overview
 
+### `function sendEth() public payable`
+- Accepts ETH if the deadline has not passed and the contribution is >= 100 wei
+- Updates contributor balances and total raised amount
+
 ```solidity
-function sendEth() public payable
+function sendEth() public payable {
+    require(block.timestamp < deadline, "The deadline has passed.");
+    require(msg.value >= 100 wei, "Minimum contribution not met.");
+
+    if(Contributors[msg.sender]==0){
+        noOfContributors++;
+    }
+    Contributors[msg.sender] += msg.value;
+    raisedAmount += msg.value;
+}
+
